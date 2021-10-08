@@ -64,10 +64,9 @@ def full_board_check(board):
 def player_choice(board):
     move = 0
 #ask player about the move
-    while move not space_check(board, move) or not in range[1,10]:
-        move = input('select move : ')
-
-    return move
+    while move not in [1,2,3,4,5,6,7,8,9] or not space_check(board, move):
+        move = int(input('select move : '))
+        return move
 
 def replay():
     
@@ -82,10 +81,11 @@ print('Welcome to Tic Tac Toe!')
 while True:
     #reset the board
     playBoard= [' ']*10
-    player1_move, player2_move = player_input()
+    player1_move, player2_move = player_marker()
     # Set the game up here
 
-    turn = 'Player 1'
+    turn = choose_first()
+    print(turn + ' move ')
 
     play_game = input('play? Enter y or n')
     
@@ -97,37 +97,37 @@ while True:
     while game_on:
         if turn == 'Player 1':
             #show current board
-            display_board(playBoard)
+            print_board(playBoard)
             #select move
             move= player_choice(playBoard)
             #place marker
             place_move(playBoard, player1_move, move)
 
             #check victory condition
-            if win_check(playBoard, mark):
+            if win_check(playBoard, player1_move):
                 print ('win player 1')
             else:
                 if full_board_check(playBoard):
                     print('draw')
-                    gameon=False
+                    break
                 else:
                     turn='Player 2'
         else:
-            if turn == 'Player 2':
+            
             #show current board
-            display_board(playBoard)
+            print_board(playBoard)
             #select move
             move= player_choice(playBoard)
             #place marker
-            place_move(playBoard, player1_move, move)
+            place_move(playBoard, player2_move, move)
 
             #check victory condition
-            if win_check(playBoard, mark):
+            if win_check(playBoard, player2_move):
                 print ('win player 2')
             else:
                 if full_board_check(playBoard):
                     print('draw')
-                    gameon=False
+                    break
                 else:
                     turn='Player 1'
 
